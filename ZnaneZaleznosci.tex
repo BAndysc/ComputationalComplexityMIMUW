@@ -1,0 +1,70 @@
+\subsection{Podstawowe klasy}
+\begin{itemize}
+    %\item $\P \subseteq \NP \subseteq \bigcup_{c > 1} \DTIME(2^{n^c})$ %
+    \item $\DSPACE(f(n)) \subseteq  \bigcup_{c >0} \DTIME(n * c^{f(n)})$ 
+    \item if $f(n) \geq log(n)$, then $\DSPACE(f(n)) \subseteq  \bigcup_{c >0} \DTIME(c^{f(n)})$
+    %\item $\P \subsetneq \P\poly$ ($\P\poly \not\subseteq \P$)
+    %\item $\NPSPACE = \PSPACE = \co\NPSPACE$, zamknięte na przecięcie %todo jest na rysunku
+   
+    \item $\NTIME(f(n)) \subseteq \DSPACE(f(n))$
+    \item $\NSPACE(f(n)) \subseteq \cup_{c \in \mathbb{N}} \DTIME(c^{f(n) + log(n)})$
+    \item (Savitch's theorem) if $f(n)=\Omega(log n)$, then $\NSPACE(f(n)) \subseteq \DSPACE(f(n)^2)$
+%    \item $\NL = \co\NL$
+    \item if $S(n) \geq log(n)$, then $\NSPACE(S(n))= \co\NSPACE(S(n))$
+     %\item $\L \subsetneq \PSPACE$ %todo oczywiste ze space hierarchy 
+    \item $\textbf{polyL} \neq \PSPACE$
+    \item $\textbf{polyL} \neq \P$
+
+\end{itemize}
+\subsection{Obwody}
+\begin{itemize}
+    \item $\AC = \NC$, $\u\AC = \u\NC$
+    \item $\AC^k \subseteq \NC^{k+1}$, $\u\AC^k \subseteq \u\NC^{k+1}$ 
+%    \item $\u\NC^1 \subseteq \L \subseteq \NL \subseteq \u\AC^1 \subseteq \u\NC^2$
+%    \item języki regularne $\subseteq \u\NC^1$ (ale nie $\AC^0$)
+    \item $\u\AC \subseteq \P$
+    \item $\u\AC^0 \neq \u\NC^1$
+    \item $\u\NC \neq \PSPACE$
+\end{itemize}
+\subsection{Klasy probabilistyczne}
+\begin{itemize}
+%    \item $\P \subseteq \RP \subseteq \NP$
+%    \item $\NP \subseteq \PP$
+%    \item $\RP \subseteq \BPP \subseteq PP$
+    \item if $\NP \subseteq \BPP$, then $\NP \subseteq \RP$
+%    \item $\ZPP = \RP \cap \co\RP$
+%    \item $\BPP \subseteq P\poly$
+%    \item $\BPP \subseteq \PSPACE$
+%    \item $\ZPP \subseteq \BPP$
+%    \item $\co\RP \subseteq \BPP$
+%    \item $\ZPP = \co\ZPP$
+%    \item $\BPP \subseteq \textbf{BQP}  \subseteq \PSPACE$
+\end{itemize}
+
+
+\subsection{Polynomial hierarchy i alternating machine}
+\begin{itemize}
+    \item $\sum_k^p \subseteq \sum_{k+1}^p$, $\sum_k^p \subseteq \prod_{k+1}^p$, $\prod_k^p \subseteq \sum_{k+1}^p$, $\prod_k^p \subseteq \prod_{k+1}^p$
+    \item if $\sum_k^p = \prod_k^p$, then $\sum_k^p = \PH$
+    \item $\PH \subseteq \PSPACE$
+%    \item $\AL = \P$
+%    \item $\AP = \PSPACE$
+    
+    
+    
+
+   
+    
+\end{itemize}
+
+\subsection{PCP i IP}
+\begin{itemize}
+    \item $PCP(poly(n), 0) = \co\RP$
+    \item $PCP(0, poly(n))= \NP$
+    \item $PCP(log(n), poly(n)) = \NP$
+    \item $PCP(log(n), 1) = \NP$
+    \item $PCP(poly(n), 1) = \EXPTIME$
+    \item $PCP(1,1) = \P $
+%    \item $\textbf{d}\IP = \NP$
+%    \item $\IP = \PSPACE$
+\end{itemize}

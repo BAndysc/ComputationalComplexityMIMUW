@@ -1,0 +1,116 @@
+
+\subsection{Problem 1}
+
+Let
+\begin{align*}
+DIST = \{(G, s, t, d)\ |\ &
+    \textrm{d is the length of the shortest path}\\
+    & \textrm{from s to t in directed graph G}
+\}
+\end{align*} 
+In other words, $(G,s,t,d) \in DIST$ when there is no path from $s$ to $t$ in $G$ of length smaller than $d$, but there is such a path of length $d$. Show that $DIST$ is $\NL$-complete. (Don’t forget to show that $DIST \in \NL$. Note that because $d$ is given in binary, the working memory should be $O(log(log(d)+|G|))$.)
+
+\subsubsection*{Rozwiązanie}
+
+\begin{itemize}
+    \item jest $\NL$:
+    
+    ponieważ $\NL = \co\NL$, w $\NL$ sprawdzimy istnienie ścieżki długości co najwyżej $d$ (reachability - zgadujemy wierzchołki), a za pomocą $\co\NL$ sprawdzamy, że nie istnieje ścieżka krótsza niż $d$ (unreachability).
+    
+    \begin{itemize}
+        \item $\exists$ ścieżka z $s$ do $t$ długości $\leq d$ $\in \NL$
+        \item $\neg \exists$ ścieżka z $s$ do $t$ długości $< d$ $\in \co\NL = \NL$
+    \end{itemize}
+    
+    Bierzemy przecięcie tych dwóch języków.
+    
+    Trzeba jeszcze uważać na pamięć, bo $d$ jest zapisane binarnie. Jeśli $d$ jest większe niż liczba wierzchołków to odrzucamy od razu. W przeciwnym wypadku $d$ jest logarytmiczne względem rozmiaru grafu.
+    
+    \item $\NL$-hard
+    
+    redukcja z unreachability - dodajemy ścieżkę między wierzchołkami $s$ do $t$ długości $n+1$ (dłuższa niż jakakolwiek ścieżka bez cykli). Puszczamy nasz program z $d = n+1$, jeśli znajdzie tę ścieżkę, to znaczy, że w oryginalnym grafie nie było ścieżki między $s$ a $t$, więc wierzchołki są nieosiągalne. Wpp. była ścieżka od $s$ do $t$ w oryginalnym grafie, tzn. były osiąganlne.
+\end{itemize}
+
+\subsection{Problem 2}
+We say that a language $L \in \{0, 1\}^*$ has $\AC^0$ witnesses if there exists a polynomial $p : \mathbb{N} \rightarrow \mathbb{N}$ and a uniform sequence of circuits of polynomial size and constant depth $(C_n)_{n \in \mathbb{N}}$, where $C_n$ has $n+p(n)$ input gates, such that for every $v \in \{0, 1\}^*$, 
+\[
+ (v \in L) \iff (\exists\ w \in \{0, 1\}^{p(|v|)}\ such\ that\ C_{|v|}(v, w) = 1).
+\]
+
+Prove that the class of languages that have $\AC^0$ witnesses equals $\NP$.
+
+\subsubsection*{Rozwiązanie}
+
+definicja naszej klasy $w_{\AC_0}$: $(v \in L) \iff (\exists\ w \in \{0, 1\}^{p(|v|)}\ such\ that\ C_{|v|}(v, w) = 1)$
+
+definicja $\NP$: $x \in L \iff \exists u \in \{0, 1\}^*\ such\ that M(x, u) = 1$ i $M$ to deterministyczna maszyna Turinga.
+
+\begin{itemize}
+    \item $w_{AC_0} \subseteq \NP$
+    
+    Weźmy język $L \in w_{AC_0}$. $\forall_{x \in L} M(x, u)$, ale $AC_0 \subseteq P$, dlatego $M$ może symulować $C_{|x|}$. OK
+    
+    \item $\NP \subseteq w_{AC_0}$
+    
+    Nie możemy redukować z konkretnego języka $\NP$-zupełnego, bo redukcję należałoby wykonać na obwodzie, a raczej nikt nie wie jak to zrobić.
+    
+    W świadku będziemy trzymać biegi maszyny. Weźmy dowolny język z klasy $\NP$ (tzn. istnieje maszyna niedetemrinistyczna, która rozpoznaje język $L \in \NP$)
+    
+    Chcemy taki obwód: $C_M$ akceptuje $\langle v, w \rangle \iff$ $w$ jest poprawnym biegiem akceptującym $M$ na $v$. Jeśli taki obwód zrobimy, to już dobrze.
+    
+\end{itemize}
+
+\subsection{Problem 3}
+For a word $w \in \{0, 1\}^∗$, consider the following randomized process:
+\begin{itemize}
+    \item we randomly choose a pair of positions $a, b$, such that $1 \leq a \leq b \leq |w|\ and\ b − a \leq \frac{|w|}{2}$ (every such a pair is equally probable);
+    \item we reverse all bits of won positions $i \in \{a,a+1,...,b\}$ (all 0’s are changed to 1’s, and all
+1’s are changed to 0’s).
+\end{itemize}
+For a language $L \subseteq \{0,1\}^*$, let
+\[
+ robust(L) = \left\{ w \in L | \textrm{Prob(the process applied to w gives a word in L)} > \cfrac{3}{4} \right\}
+\]
+Show that if $L \in \RP$, then $robust(L) \in \RP$.
+
+
+
+\subsubsection*{Rozwiązanie}
+
+Przypomnijmy definicję $\RP$:
+
+\begin{itemize}
+    \item $x \in L \iff \mathbb{P}(M(x) = L(x)) > \frac{1}{2}$
+    \item $x \not\in L \iff \mathbb{P}(M(x) = L(x)) = 1$
+\end{itemize}
+
+$f(w, a, b)$ - funkcja przekształcająca zgodnie z naszym randomizowanym procesem
+
+$robust(L) = \{w \in L : \mathbb{P}(f(w) \in L) > \frac{3}{4}\}$
+
+to prawdopodobieństwo to po prostu stosunek: $\cfrac{|\text{słowa wygenerowane przez zamianę bitów, które są w języku L}|}{|\text{wszystkie słowa wygenerowane przez zamianę bitów}|}$.
+
+$\forall_{a, b} w'$ $\rightarrow$ $n^2$
+
+$w' \in L \rightarrow$ counter++
+
+$w' \in L \land M(w)\ \text{powie, ze}\ \text{w nie nalezy}$
+
+$\RP$ istnieje maszyna randomizowana, która zawsze odrzuci słowo gdy słowo nie należy do języka, ale zaakeptuje słowo z p-stwem $\frac{1}{2}$  (z amplifikacji może wyjść nawet $\frac{3}{4}$ ? a nawet możemy zrobić $> 1 - \frac{1}{5n^2}$, a nawet $> 1 - \frac{1}{2^k}$) 
+
+Mamy zatem algorytm, który prawie zawsze działa dobrze. Jest wielomianowo wiele słów, próbujemy każde $a$, $b$.
+
+$\forall_{a, b}$ sprawdzamy czy $M$ zaakceptuje $zamiana(w, a, b)$. Akceptujemy jeśi dla $\geq \frac{3}{4}$ par $M$ zaakceptowała. Dlaczego to jest dobrze? Widać, że jeśli $M$ zawsze odpowiadała poprawnie, to jest ok. Jeśli $w \not\in roboust(L)$, to dzięki temu, że $M$ się myli w dobrą stronę, to prawdopodobieństwo jest 
+
+\begin{itemize}
+    \item jeśli $w \not\in robust(L) \implies$ odrzuca w
+    \item jeśli $w \in robust(L)$:
+    \begin{itemize}
+        \item jeśli $M$ zawsze odpowiada poprawnie - OK
+        \item $\forall$ wykonań $M$ spośród $\leq n^2$ wykonań, prawdopodobieństwo błędu $\leq \frac{1}{5n^2} \quad\quad n^2\cdot\frac{1}{5n^2} \leq \frac{1}{5}$
+    \end{itemize}
+\end{itemize}
+
+$A_i$ - zdarzenie, że $M$ się pomyliła w $i$-tym wykonaniu
+
+$P(A_1 \cup \cdots A_m) \leq P(A_1) + \cdots + P(A_m) \leq \underbrace{n^2}_{m\text{ - liczba wywołań}} \cdot \frac{1}{5n^2}$

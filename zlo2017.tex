@@ -1,0 +1,124 @@
+\subsection{Problem 1}
+Udowodnij, że następujący problem jest zupełny w klasie $\NL$ ze względu na redukcje w pamięci logarytmicznej: Czy dany graf skierowany jest silnie spójny? (Zakładamy, że graf jest reprezentowany przez macierz incydencji.)
+
+\subsubsection*{Rozwiązanie}
+
+\begin{itemize}
+    \item $\NL$-trudność
+    
+    Chcemy rozwiązać problem reachability za pomocą naszego problemu silnej spójności. Weźmy sobie graf, dla którego chcemy sprawdzić reachability z $s$ do $t$. No i teraz robimy coś takiego: ze wszystkich wierzchołków (poza $t$) do wierzchołka $s$ dajemy krawędź i z wierzchołka $t$ do wszystkich innych wierzchołków dajemy krawędź (\textbf{także} do s). Pytamy czy jest silnie spójny. Jeśli jest silnie spójny, to znaczy że jest jakaś ścieżka z $s$ do $t$, no bo taka jest definicja silnej spójności. Czy jeśli nie będzie silnie spójny to znaczy że nie było ścieżki z $s$ do $t$, to widać, że tak. Bo nie dodaliśmy do $s$ nic wychodzącego, nie dodaliśmy do $t$ nic wchodzącego. 
+    
+    
+    \item jest $\NL$
+    
+    Mamy graf i wierzchołki, silną spójność sprawdzamy za pomocą reachability, po kolei. Mamy porządek na wierzchołkach i chcemy sprawdzić czy każdy jest osiągalny z każdego. Wybierzmy po kolei wierzchołki wszystkie pary wierzchołków i sprawdzamy czy są osiągalne, tak robimy dla każdej pary. Jeśli gdzieś wierzchołki nie są osiągalne, to odrzucamy cały bieg, jeśli dobrze - sprawdzamy kolejne wierzchołki. Jeśli graf jest spójny, to będzie jeden bieg, który akceptuje wszystko (o ile jest spójny).
+    
+    Drugi sposób: pokażemy, że dopełnienie spójności jest w $\co\NL$ (możemy to zrobić, bo $\NL = \co\NL$). Jak pokazać, że graf jest niespójny w $\co\NL$ ($=\NL$)? Niedeterministycznie wybieramy dwa wierzchołki i sprawdzamy czy są osiągalne. Jeśli nie są osiągalne, to graf jest niespójny, koniec. 
+    
+\end{itemize}
+
+Jest w $\NL$ i $\NL$-trudny, więc jest $\NL$-zupełny.
+
+\subsection{Problem 2}
+Przypuśćmy, że istnieje deterministyczny wielomianowy algorytm A, który z błędem $\frac{2}{5}$ aproksymuje prawdopodobieństwo, że dany obwód $C$ akceptuje losowe wejście. Dokładniej, dla obwodu $C(x_1, \cdots , x_n)$ algorytm oblicza liczbę wymierną A(C), taką że
+\[
+    |Pr(C(U_n) = 1) - A(C_n)| \leq \frac{2}{5}
+\]
+
+(\textit{note} w treści zadnia był błąd - $C(A)$ nie ma sensu)
+
+(Gdzie zmienna losowa $U_n$ przyjmuje wartości w zbiorze ${0, 1}^n$ z jednostajnym prawdopodobieństwem.) Dowiedź, że wtedy $\P = \BPP$.
+
+\subsubsection*{Rozwiązanie}
+
+$A$ - algorytm wielomianowy
+
+$C_n$ - obwód, który oblicza wartość $A(C)$ (w przybliżeniu dla ilu słów wejściowych ten obwód akceptuje)
+
+Możemy założyć, że $r$ jest wielomianowej długości ($\exists$ wielomian $p$ taki, że $M$ czyta $\leq p(|w|)$ bitów losowych
+
+Możemy założyć, że ten ciąg losowych bitów $r$ mamy na wejściu.
+
+$L \in \BPP \implies \exists_M$, która działa w czasie wielomianowym
+
+$w \in L \implies Pr_r(M\ \text{akceptuje}\ w) \geq \overbrace{\frac{19}{20}}^{\text{możemy założyć dowolną liczbę}}$ 
+
+$w \not\in L \implies Pr_r(M\ \text{odrzuca}\ w) \leq \frac{1}{20}$
+
+
+Przekształcamy maszynę na obwód, a ciąg bitów na stałe kodujemy w tej maszynie. Obwód symuluje $M$ na słowie wejściowym $w$ oraz na ciągu bitów losowych z wejśćia długości $p(|w|)$.
+
+$\left|\underbrace{Pr_{w \in \{0, 1\}^n} (C_n\ \text{akceptuje}\ w)}_{\geq \frac{19}{20}\ \text{o ile}\ w\in L} - \underbrace{A(C_n)}_{\geq \frac{11}{20}}\right| \leq \frac{2}{5}$
+
+gdy $w \not\in L$ - $Pr_{w \in \{0, 1\}^n} (C_n\ \text{akceptuje}\ w) \leq \frac{1}{10}$, a $A(C_n) \leq \frac{9}{20}$
+
+\subsection{Problem 3}
+
+Niech $M$ będzie niedeterministyczną maszyną Turinga działającą w pamięci wielomianowej. Wykaż, że istnieje deterministyczna maszyna pracująca w czasie wykładniczym (tzn. $2^{n^k}$ , dla pewnego $k$), która dla wejścia w oblicza liczbę obliczeń akceptujących maszyny M na słowie w. (Można założyć, że M nie ma obliczeń nieskończonych.)
+
+\subsubsection*{Rozwiązanie}
+
+\sout{Mamy bardzo dużo czasu, więc po prostu na deterministycznej symulujemy pałowo maszynę niedeterministyczną symulując jej biegi, a potem wykonując backtracking - czyli po prostu przejście po grafie, nawet bez znaczenia czy DFS czy BFS, mamy dużo miejsca, więc po prostu trzymamy stos.}
+
+Dzięki założeniu z treści zadania, że nie ma nieskończonych obliczeń, graf konfiguracji tej maszyny nie ma cykli - jest DAGiem. Bez tego założenia to rozwiązanie nie działa.
+
+Chcemy policzyć liczbę ścieżek akceptujących na grafie konfiguracji. Przechodzimy zatem cały graf konfiguracji (ile kosztuje jego wygenerowanie?) DFSem, ale podczas przechodzenia chcemy zliczać \textbf{ile jest ścieżek od danego wierzchołka do jakiegoś stanu akceptującego}. To już jest proste, przykład:
+
+\input{przyklady/dag_2016}
+
+
+
+\section{Egzamin 2016/2017 poprawkowy}
+\subsection{Problem 1}
+Udowodnij, że następujący problem jest zupełny w klasie $\PSPACE$ ze względu na redukcje w pamięci logarytmicznej:
+Wejście: kod niedeterministycznej maszyny $M$, słowo $w$ nad alfabetem $\{0,1\}^*$, słowo postaci $1^n$. Pytanie: Czy $M$ akceptuje $w$ w pamięci $n$?
+
+\subsubsection*{Rozwiązanie}
+
+\begin{itemize}
+    \item jest $\PSPACE$
+    
+    \sout{modyfikujemy maszynę: dodajemy taśmę, która jest licznikiem zajętego miejsca. Tzn przy chodzeniu poza taśmę, zwiększamy ten licznik. Rozpoznanie wychodzenia poza taśmę robimy za pomocą powiększonego alfabetu - każdy symbol występuje w wersji ,,odwiedzonej'' i ,,nieodwiedzonej''. Chcemy żeby bieg maszyny zwracał TAK gdy licznik miejsca przekroczy $n$ LUB gdy w tym biegu maszyna chce odrzucić słowo w mniej niż $n$ miejsca. Czyli rozpatrujemy problem odwrotny. Czyli maszyna zwraca TAK gdy $M$ NIE akceptuje słowa $w$ w pamięci $n$. Teraz wystarczy odwrócić wynik. Symulację przeprowadzamy niedeterministycznie, ale możemy to zrobić, bo $\PSPACE = \NSPACE$}. 
+    
+    \sout{Dlaczego nie możemy po prostu puścić maszyny, której bieg akceptuje słowo $w$ w pamięci $n$ (licząc pamięć tak samo?). Bo może się zdarzyć, że jeden bieg zwróci TAK (bo po prostu zaakceptowało słowo $w$ w pamięci $n$), drugi bieg zwróci NIE, bo w tym biegu przekroczyliśmy $n$, ale wtedy wynik całej maszyny to będzie TAK, bo tak działają niedeterministyczne maszyny - jeśli istnieje jakiś bieg akceptujący, to cała maszyna akceptuje. A my potrzebujemy czegoś odwrotnego - dlatego bierzemy dopełnienie problemu, a możemy to zrobić, bo  $\co\PSPACE = \PSPACE = \co\NSPACE = \NSPACE$}
+    
+    Jeśli zakładamy, że KAŻDY bieg musi być w pamięci $n$, to:
+    
+    Robimy dwa języki - \textbf{Acc}, język słów, które są akceptowane w pamięci $n$ (po prostu symulacja maszyny ze zliczaniem - jest $\NPSPACE$) oraz drugi język $\textbf{M}_{\textbf{ok}}$ - język słów, które nie muszą być akceptowane, ale ich sprawdzenie nie przekracza pamięci $n$. Ten język należy do klasy $\co\NPSPACE$. Dzięki temu, że $\PSPACE = \NPSPACE = \co\NPSPACE$ i te klasy są zamknięte na dopełnienie, zatem przecięcie $\textbf{Acc} \cap \textbf{M}_{\textbf{ok}}$ jest w $\PSPACE$ (a przecięcie to te słowa, które mieszczą się w pamięci $n$).
+    
+    jeśli zakładamy, że TYLKO bieg akceptujący musi spełniać warunek pamięci to:
+    
+    z douczek: niedeterministycznie symulujemy maszynę i wykrywamy zapętlenia (jeśli zrobi więcej niż wykładniczo wiele kroków (tzn. liczba konfiguracji), to kończymy symulację).
+    
+    \item jest $\PSPACE$-trudny
+    
+    robimy redukcję z dowolnego języka z klasy $\PSPACE$, ona zajmuje $p(n)$ pamięci (to jest konkretny wielomian dla tego języka, znamy go), podczas redukcji robimy wejście: $\langle w, 1^{p(|w|)} \rangle$ i to już działa. Redukcja jest logarytmiczna, bo maszyna ma wielkość stałą, wejście też, a wypisywanie licznika wymaga tylko logarytmicznej pamięci.
+    
+    $w \in L \iff \text{akceptacja na maszynie} M\ \text{o wejściu} \langle w, 1^{p(|w|)} \rangle$
+    
+\end{itemize}
+
+\iffalse
+\subsection{Problem 2}
+Język $L$ nazwiemy skrajnym, jeśli istnieje wielomian $p(n)$ taki, że dla każdego $n \in \mathbb{N}$ zachodzi 
+\[
+   min(|\{w \in L : |w| = n\}, |\{w \not\in L : |w| = n\}|) \leq p(n)
+\]
+Udowodnij, że każdy skrajny język nad alfabetem $\{0,1\}^*$ należy do (niejednorodnej) klasy $\AC^0$. Czy zachodzi stwierdzenie odwrotne, tzn. czy wszystkie języki w klasie $\AC^0$ są skrajne?
+\fi
+
+
+\iffalse
+\subsection{Problem 3}
+Klasę $\textbf{BPL}$ definiujemy podobnie jak klasę $\BPP$ z dodatkowym ograniczaniem, że pamięć robocza używana przez maszynę jest ograniczona przez $O(log\ n)$.
+Dokładniej, język $L$ należy do $\textbf{BPL}$ jeśli istnieje probabilistyczna maszyna Turinga $M$, która
+\begin{itemize}
+    \item wykorzystuje dodatkową taśmę jednokrotnego odczytu (głowica przesuwa się tylko w prawo) zawierającą bity losowe,
+    \item $M$ używa pamięci logarytmicznej,
+    \item dla każdego $w \in \L$, maszyna $M$ akceptuje $w$ z prawdopodobieństwem większym lub równym $\frac{3}{4}$,
+    \item dla każdego $w \not\in \L$, maszyna $M$ akceptuje $w$ z prawdopodobieństwem mniejszym niż $\frac{1}{4}$.
+\end{itemize}
+(Zauważmy, że długość ciągu bitów losowych nie jest ograniczona logarytmicznie.)
+Udowodnij, że klasa $\textbf{BPL}$ zawarta jest w $\P$.
+
+\fi

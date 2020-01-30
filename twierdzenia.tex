@@ -1,0 +1,74 @@
+\begin{enumerate}
+    \item Theorem (linear speed-up)
+    
+    If a language L is decidable in time T(n), then for every constant $c > 0$ it is also decidable in time $c*T(n) + O(n)$
+    
+    \item Sipser's theorem
+    
+    Consider a machine M working in space $S(n)$, but not necessarily having the halting property. Then there exists a machine $M'$ such that:
+    \begin{itemize}
+        \item $L(M') = L(M)$
+        \item $M'$ works in space $S(n)$
+        \item $M'$ halts on every input
+    \end{itemize}
+    Corrollary: If a language L is semidecidable, but not decidable, then every machine M recognizing L on some word w uses infinite memory.
+    
+    \item Universal machine's theorem
+    
+    There exists a universal Turing Machine U (an "interpreter"), such that $U(\langle M \rangle,w) = M(w)$. If M works in time T(w) and space S(w), then U works in time  $O(T|w|)*log(T|w|)))$ and space $O(S|w|)).$
+    
+    \item Space hierarchy theorem
+    
+    If function $g(n)$ is space-constructible and $f(n)=o (g(n))$ then $\DSPACE(f(n)) \neq \DSPACE(g(n))$
+    
+    \item Time hierarchy theorem
+    
+    If function $g(n)$ is time-constructible and $f(n)=o (g(n))$ then $\DTIME(f(n)) \neq \DTIME(g(n)log(n)))$
+    
+    \item Gap theorems
+    
+    There is a computable function $f(n) \geq n$ such that $\DTIME(f(n)) = \DTIME(2^{f(n))}$.
+    
+    There is a computable function $f(n)$ such that $\DSPACE(f(n)) = \DSPACE(2^{f(n))}$.
+    
+    \item Simulating machines by circuit
+    
+    Every language recognizable in time T(n) on a multi-tape machine can be recognized by a sequence of circuits $(C_{n})_{n \in \mathbb{N}}$ of depth $O(T(n))$ and $O(T(n)*log(T(n))))$. The circuit $C_n$ can be generated in logarithmic space.
+    
+    \item P/poly theorem
+    
+    A language belongs to P/poly iff it is recognizable by a sequence of circuits of polynomial size.
+    
+    \item Uniform sequences of circuits
+    
+    A language is recognizable by a uniform sequence of circuits iff it is in $\P$
+    
+    \item Ladner's theorem
+    
+    If $\P \neq \NP$, then there is a problem, which is in $\NP \backslash \P$, but is not  $\NP-hard$ with respect to polynomial-time reductions (so even more with respect to logarithmic-space reductions).
+    
+    
+    \item Theorem (Berman 1978)
+    
+    If $\P \neq \NP$, then no language over a single-letter alphabet is $\NP-hard$ wrt. polynomial-time reductions (so even more wrt. logarithmic-space reductions)
+    
+   
+    
+    
+    \item Theorem (Baker-Gill-Solovay, 1975)
+    
+     There exist languages $A$, $B$ such that $\P^A=\NP^A$ and $\P^B \neq \NP^B$
+
+    \item Theorem (Courcelle 1990):
+    Every property of graphs expressible in the MSO logic can be
+    decided in time $f(s) * n$, where s is the treewidth.
+    In this logic, we allow quantification over sets of nodes, and over sets of edges. For most properties, it is easy to express them in this logic.
+    
+    \item Amplification
+    
+    Let $L \in \RP$. Then, for every polynomial $q(n)$ there is a machine M with source of random bits, working in polynomial time and such that:
+    \begin{itemize}
+        \item $w \in L \Rightarrow Pr_s[(w,s) \in L_M] \geq 1-1/2^{q(n)}$
+        \item $w \notin L \Rightarrow \nexists s. (w,s) \in L_M$
+    \end{itemize}
+\end{enumerate}

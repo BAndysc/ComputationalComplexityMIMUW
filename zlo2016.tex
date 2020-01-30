@@ -1,0 +1,148 @@
+\subsection{Problem 1}
+
+Opisz jak deterministycznie w pamięci logarytmicznej rozwiązać następujący problem. Dla danego ciągu wejściowego $w \in \{0, 1\}^∗$:
+\begin{enumerate}
+    \item sprawdź, czy $|w|$ jest postaci $n^2$ dla jakiejś liczby n,
+    \item jeśli tak, to sprawdź czy $w$, rozumiane jako graf relacji binarnej na zbiorze $\{1, \cdots, n\}$, zadaje relację równoważności,
+    \item jeśli tak, to wypisz (w reprezentacji binarnej) liczbę klas abstrakcji tej relacji.
+\end{enumerate}
+
+\subsubsection*{Rozwiązanie}
+
+Intuicyjnie algorytmy w pamięci logarytmicznej korzystają ze stałej liczby wskaźników.
+
+\begin{enumerate}
+    \item Dodajemy kolejne liczby nieparzyste aż nie przekroczymy długości słowa, jak trafimy akurat w długość słowa to jest kwadratem
+    
+    \textbf{Prościej}: iterujemy po liczbach od $1$ do $n$, liczymy jej kwadrat (w pętli dodawanie) i sprawdzamy czy się zgadza
+    \item \begin{minted}{python}
+    zwrotna = True
+    for x = 0 to n - 1:
+        if not krawedz(x, x):
+            zwrotna = False
+    
+    symetryczna = True
+    for x = 0 to n - 1:
+        for z = 0 to n - 1:
+            if krawedz(x, z) and not krawedz(z, x):
+                symetryczna = False
+    
+    przechodnia = True
+    for x = 0 to n - 1:
+        for y = 0 to n - 1:
+            for z = 0 to n - 1:
+                if krawedz(x, y) and krawedz(y, z):
+                    if not krawedz(x, z):
+                        przechodnia = False
+                        
+    rownowaznosci = zwrotna and przechodnia and symetryczna
+    \end{minted}
+    
+    \item \begin{minted}{python}
+    ileKlas = 1 # bo klasa z "0"
+    for i = 0 to n - 1:
+        czyNowaKlasaAbstrakcji = True
+        for j = 0 to i - 1:
+            if krawedz(i, j):
+                czyNowaKlasaAbstrakcji = False
+        if czyNowaKlasaAbstrakcji:
+            ileKlas += 1
+    \end{minted}
+\end{enumerate}
+
+\subsection{Problem 2}
+Obwód logiczny o $2n$ bramkach wejściowych i jednej bramce wyjściowej definiuje graf skierowany o $2^n$ wierzchołkach w ten sposób, że jeśli na pewnej kombinacji wartości bramek wejściowych daje wartość $1$, to w grafie występuje krawędź z wierzchołka o numerze $K$ do wierzchołka o numerze $M$, gdzie $K$ jest binarnie reprezentowane przez ciąg wartości pierwszych $n$ bramek, a $M$ – drugich $n$ bramek.
+
+Rozważmy następujący problem. Dane: obwód jak powyżej oraz dwie liczby binarne $K$, $M$ o $n$ bitach każda. Czy wierzchołek $M$ jest osiągalny z $K$ w grafie zdefiniowanym przez ten obwód?
+
+Udowodnij, że ten problem jest $\PSPACE$-zupełny
+
+\subsubsection*{Rozwiązanie}
+
+\begin{itemize}
+    \item jest $\PSPACE$
+    
+    niedeterministycznie zgadujemy ścieżkę między nimi i $n$ razy symulujemy ten obwód (Dla każdej pracy wierzchołków na tej ścieżce sprawdzamy czy istnieje między nimi krawędź. Zatem jest $\NPSPACE$, czyli jest $\PSPACE$. Ważne, że wygenerowany obwód jest wielomianowej wielkości.
+    
+    \item $\PSPACE$-trudne
+\end{itemize}
+
+\subsection{Problem 3}
+Dla dowolnego języka $L \subseteq \Sigma^*$, i dla słowa $w= w_1w_2\cdots w_n \in \Sigma^n$, słowo $w^{(L)} \in \{0, 1\}^n$ jest zdefiniowane następująco:
+\[
+    \left(w^{(L)}\right)_i = \left\{ 
+    \begin{array}{ll}
+        1 & \textrm{jeśli}\ w_1w_2\cdots w_i \in L \\
+        0 & \textrm{w przeciwnym wypadku}
+    \end{array}
+    \right.
+\]
+
+Dla języków $L \subseteq \Sigma^*$ i $K \subseteq \{0, 1\}^*$, język $K^{(L)} \subseteq \Sigma^*$ definujemy tak:
+\[
+    K^{(L)} = \{ w\ |\ w^{(L)} \in K\}
+\]
+Przykładowo, jeżeli $K$ to język wszystkich słów, w których co najmniej raz występuje litera $1$, to $K^{(L)}$ to język tych słów, w których co najmniej jeden prefiks należy do L.
+
+Udowodnij, że jeśli $L \in \BPP$ i $K \in \BPP$ to $K^{(L)} \in \BPP$.
+
+
+\subsubsection*{Rozwiązanie}
+
+$p$ - prawdopodobieństwo błędu któregoś z automatów - języka L lub K.?
+
+$P(\text{dobrego wyniku}) \geq (1 - p)^n(1-p) = (1-p)^{n+1}$
+
+$P(\text{złego wyniku}) \leq 1 - (1 - p)^{n+1} < p(n+1)$
+
+nierówność Bernouliego: $(1 + x)^n \leq 1 + nx$
+
+$p(n+1) < \frac{1}{3}$
+
+$p < \frac{1}{3n + 3}$
+
+amplifikacja i już
+
+\section{Egzamin 2015/2016 poprawkowy}
+
+\subsection{Problem 1}
+Powiemy, że formuła jest w postaci (2, 3)-CNF, jeśli jest koniunkcją klauzul, z których każda zawiera 2 lub 3 literały. O wartościowaniu powiemy, że 2-spełnia taką formułę, jeśli każda klauzula złożona dwóch literałów jest spełniona w zwykłym sensie, natomiast w każdej klauzuli złożonej z trzech literałów, dokładnie dwa są prawdziwe. Na przykład formuła $(x \lor y) \land (y \lor z) \land (z \lor x) \land (x \lor y \lor z)$ jest spełniona przez wartościowanie $x \mapsto 1$, $y \mapsto 1$, $z \mapsto 0$, a formuła $(x \lor y \lor z) \land (x \lor y \lor z)$ nie jest spełniona przez żadne wartościowanie.
+
+Udowodnić, że następujący problem jest $\NP$-zupełny: Dla danej formuły $w$ postaci (2,3)-CNF, rozstrzygnąć, czy istnieje wartościowanie, które 2-spełnia tę formułę.
+
+\subsubsection*{Rozwiązanie}
+
+Redukcja z 3-kolorwania. Dostajemy graf i dla każdego wierzchołka $v$ robimy 3 zmienne $v_1$, $v_2$, $v_3$, w następujący sposób:
+
+\[
+    v_i = \left\{ \begin{array}{ll} 0 & jeśli\ col(v) = i \\ 1 & wpp \end{array} \right.
+\]
+
+I dla każdego wierzchołka tworzymy takie klauzule: $(v_1 \veebar v_2 \veebar v_3)$ ($\veebar$ to oznaczenie na ten specjalny lub z zadania, gdzie dokładnie dwie są prawdziwe).
+
+Dla każdej krawędzi od $a$ do $b$ robimy klauzule: $(a_1 \lor b_1) \land (a_2 \lor b_2) \land (a_3 \lor b_3)$.
+
+\subsection{Problem 2}
+Dla danego skończonego ciągu liczb naturalnych (nieposortowanego) i liczby $i$, mamy wskazać liczbę, która po posortowaniu znalazłaby się na $i$-tym miejscu. Udowodnić, że istnieje deterministyczna maszyna Turinga, która rozwiązuje ten problem, pracując w roboczej pamięci logarytmicznej. Zakładamy, że słowo wejściowe jest w postaci $w_1\#\cdots\#w_k\#i$, gdzie $w_1, \cdots, w_k$ oraz $i$ są liczbami zapisanymi binarnie. Jeżeli format jest niewłaściwy (np. $i > k$), maszyna sygnalizuje błąd.
+
+\textbf{Wskazówka}. Rozwiązać najpierw szczególny przypadek, kiedy w ciągu nie ma powtórzeń. (Rozwiązania ograniczone do tego przypadku też będą punktowane.)
+
+\subsubsection*{Rozwiązanie}
+
+Po kolei szukamy kolejnych liczb w kolejności rosnącej, robimy to $i$ razy. Z powtórzeniami: po znalezieniu kolejnej liczby, ponownie przechodzimy przez te liczby i zliczamy liczbę jej wystąpień. O tyle zwiększami licznik $i$.
+
+\subsection{Problem 3}
+Zakładamy, że lewy nawias jest reprezentowany przez $0$, a prawy przez $1$. Udowodnić, że język poprawnych wyrażeń nawiasowych jest w klasie $\AC^1$, tzn. może być rozpoznany przez ciąg obwodów o rozmiarze wielomianowym i głębokości logarytmicznej, przy dowolnym stopniu wejścia.
+
+\textit{Uwaga}. Można udowodnić silniejsze stwierdzenie, że interesujący nas język jest w klasie $\NC^1$.
+
+\subsubsection*{Rozwiązanie}
+
+Wiadomo, że $\L \in \AC^1$, więc wystarczy napisać prostą pętlę z licznikiem otwartych nawiasów.
+
+
+\textbf{Inny sposób}:
+
+Sprawdzamy parami, logarytmiczna wysokość:
+
+\input{przyklady/nawiasy_2016.tex}

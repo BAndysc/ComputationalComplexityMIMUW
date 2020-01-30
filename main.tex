@@ -1,0 +1,101 @@
+\documentclass[landscape, 9pt, twocolumn]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage[margin=0.5in,top=0.7in,footskip=.25in]{geometry}
+
+\setlength{\parindent}{0em}
+\setlength{\parskip}{0.4em}
+\usepackage{dirtytalk}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{minted}
+\usepackage{tikz}
+\usepackage{amsmath,amsthm}
+\usepackage{bm}
+\usepackage[normalem]{ulem}
+
+
+\newcommand{\maysubsetneq}{\stackrel{?}{\subsetneq}}
+\newcommand{\maysubseteq}{\stackrel{?}{\subseteq}}
+\newcommand{\mayeq}{\stackrel{?}{=}}
+\newcommand{\mayneq}{\stackrel{?}{\neq}}
+\newcommand{\ra}{\rightarrow}
+\newcommand{\la}{\leftarrow}
+\newcommand{\PSPACE}{\textbf{PSPACE}}
+\newcommand{\NSPACE}{\textbf{NSPACE}}
+\newcommand{\EXPSPACE}{\textbf{EXPSPACE}}
+\newcommand{\NEXPSPACE}{\textbf{NEXPSPACE}}
+\newcommand{\NPSPACE}{\textbf{NPSPACE}}
+\newcommand{\ZPP}{\textbf{ZPP}}
+\newcommand{\BPP}{\textbf{BPP}}
+\renewcommand{\P}{\textbf{P}}
+\newcommand{\NP}{\textbf{NP}}
+\renewcommand{\L}{\textbf{L}}
+\newcommand{\NL}{\textbf{NL}}
+\newcommand{\AL}{\textbf{AL}}
+\newcommand{\PH}{\textbf{PH}}
+\newcommand{\AP}{\textbf{AP}}
+\newcommand{\BQP}{\textbf{BQP}}
+\newcommand{\IP}{\textbf{IP}}
+\renewcommand{\AP}{\textbf{AP}}
+\newcommand{\RP}{\textbf{RP}}
+\newcommand{\PP}{\textbf{PP}}
+\newcommand{\AC}{\textbf{AC}}
+\newcommand{\NC}{\textbf{NC}}
+\newcommand{\EXPTIME}{\textbf{EXPTIME}}
+\newcommand{\NEXPTIME}{\textbf{NEXPTIME}}
+\newcommand{\DTIME}{\textbf{DTIME}}
+\newcommand{\DSPACE}{\textbf{DSPACE}}
+\newcommand{\NTIME}{\textbf{NTIME}}
+\newcommand{\co}{\textbf{co}}
+\renewcommand{\u}{\textbf{u-}}
+\newcommand{\poly}{\textbf{/poly}}
+\newcommand{\polyL}{\textbf{polyL}}
+
+\usetikzlibrary{chains,fit,shapes,shapes.arrows}
+\title{ZŁO DO EGZAMINU}
+\author{}
+\date{}
+
+\begin{document}
+
+\makeatletter
+\AtBeginEnvironment{minted}{\dontdofcolorbox}
+\def\dontdofcolorbox{\renewcommand\fcolorbox[4][]{##4}}
+\makeatother
+
+\section{Znane zależności}
+\input{zaleznosci.tex}
+
+\input{ZnaneZaleznosci.tex}
+
+\section{Nieznane zależności}
+\input{NieznaneZaleznosci.tex}
+
+\section{Definicje}
+\input{definicje.tex}
+
+\section{Twierdzenia}
+\input{twierdzenia.tex}
+
+\section{Problemy Zupełne}
+\input{problemyZupelne.tex}
+
+\section{Tricki}
+\input{tricki.tex}
+
+
+\section{Egzamin 2014/2015}
+\input{zlo2015}
+
+\section{Egzamin 2015/2016}
+\input{zlo2016}
+
+\section{Egzamin 2016/2017}
+\input{zlo2017}
+
+\section{Egzamin 2017/2018}
+\input{zlo2018}
+
+\end{document}

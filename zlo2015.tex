@@ -1,0 +1,46 @@
+\subsection{Problem 1}
+Niech $R \subseteq \{0, 1\}^* \times \{0, 1\}^*$ będzie relacją na słowach nad alfabetem $\{0, 1\}$, spełniającą następujące warunki:
+\begin{itemize}
+    \item jeśli $(u, v) \in R$, to $u$ i $v$ mają tę samą długość,
+    \item język $\{u\#v\ |\ (u, v) \in R\}$ jest w $\PSPACE$. 
+\end{itemize}
+
+Domknięcie przechodnie relacji $R$ definiujemy jako
+\[
+    R^+ = \{(u, v) : \exists_{n \in \mathbb{N}} \exists_{w_0, w_1, \cdots, w_n} u = w_0 \land v = w_n \land \forall_{0 \leq i \leq n} (w_i, w_{i+1}) \in R \}
+\]
+
+Udowodnij, że język $\{u\#v\ :\ (u, v) \in R^+\}$ jest w $\PSPACE$.
+
+\subsubsection*{Rozwiązanie}
+
+Ponieważ $\PSPACE = \NPSPACE$, to niedeterministycznie przechodzimy i już.
+
+\subsection{Problem 2}
+Załóżmy, że dla języka $L$ istnieje probabilistyczna maszyna Turinga $M$, która dla każdego słowa długości $n$ działa w czasie oczekiwanym $O(n)$ oraz niezależnie od wyników losowań akceptuje każde słowo z $L$ i odrzuca każde słowo spoza $L$. Udowodnij, że $L \in \DSPACE(n)$.
+
+\subsubsection*{Rozwiązanie}
+
+$w \in L \implies$ $M$ akceptuje $w$ (niezależnie od wyników losowań)
+
+$w \not\in L \implies$ $M$ odrzuca $w$ (niezależnie od wyników losowań)
+
+(zawsze działa dobrze, tylko czasami długo)
+
+$\forall_{w}$ istnieje $r$ - ciąg bitów losowych $r$ powodujący, że $M$ na słowie $w$ zatrzyma się w czasie $\leq c \cdot n$ i $|r| \leq c \cdot n$
+
+
+$\forall$ ciągów bitów losowych $r$ długości $= c \cdot n$ uruchamiamy $M$ na $w$ i na $r$
+
+\sout{Chcemy pokazać, że $L \subseteq \DSPACE(n)$.
+My twierdzimy, że $L = \ZPP(n)$
+Wiadomo, że $\ZPP = \RP \cap \co\RP$, $\ZPP(n) = \RP(n) \cap \co\RP(n)$
+$\RP(n) \subseteq \NP(n) = \NTIME(n) \subseteq \DSPACE(n)$}
+
+\qed
+
+
+\iffalse
+\subsection{Problem 3}
+Udowodnij, że następujący problem jest $\NP$-zupełny: dany alfabet $\Sigma$, niedeterministyczny automat skończony $A$ nad $\Sigma$ oraz liczba naturalna $n$ zapisana unarnie, czy istnieje słowo długości $n$ odrzucane przez automat $A$?
+\fi

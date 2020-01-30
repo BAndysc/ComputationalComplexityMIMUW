@@ -1,0 +1,129 @@
+\begin{enumerate}
+    \item Time-constructible $f(n)$
+    
+    It's function $f(n)$ for which there exists a machine M, which for input $1^n$
+    \begin{itemize}
+        \item outputs a word of length precisely $f(n)$
+        \item works in time $O(f(n))$
+    \end{itemize}
+    If f and g are time-constructible, then $f+g$, $f*g$, $f^g$ as well. Functions n, $\lfloor n*log(n) \rfloor$, $n^k$, $k^n$ are time-constructible. But $\lfloor log(n) \rfloor$ is NOT.
+    
+    \item Space-constructible $f(n)$
+    
+    It's function $f(n)$ for which there exists a machine M, which for input $1^n$
+    \begin{itemize}
+        \item outputs a word of length precisely $f(n)$
+        \item works in space $O(f(n))$
+    \end{itemize}
+    Every time-constructible function is also space-constructible.
+    If f and g are space-constructible, then $f+g$, $f*g$, $f^g$ as well. Functions n, $\lfloor log(n) \rfloor$, $n^k$, $k^n$ are space-constructible. But $\lfloor log(log(n+2)) \rfloor$ is NOT.
+    
+    \item P/poly class
+    
+    Languages recognizable in polynomial time by a machine with advice (of polynomial size)
+    
+    \item Uniform sequences of circuits
+    
+    A sequence of circuit $C_0, C_1, C_2,...$ is uniform if it is computable in logarithmic space. (There exists a TM working in logarithmic space, which on input $1^n$ outputs the representation of circuits $C_n$.
+    
+    \item Turing reductions / Cook reductions
+    
+    A language L is Turing-reducible to K if there exists a machine with an oracle for K, which recognizes L.
+    
+    By limiting the resources of M, one can talk about polynomial-time Turing reductions (often called Cook reductions), logarithmic-space Turing reductions, etc.
+    
+    
+    \item Karp reductions
+    
+    Idea: we can make only a single query to the language K and we cannot negate the answer.
+    
+    A language $L \subseteq \sum^*$ is Karp-reducible to $K \subseteq \Gamma^*$ if there exists a function $f:\sum^* \rightarrow \Gamma^*$ computable in logarithmic space (sometimes in polynomial time), such that $w \in L \iff f(w) \in K$ for every word $w \in \sum^*$
+    
+    \item Levin reductions
+    
+    The idea of Levin reductions: additionally a witness for the first problem allows to recover a witness for the second problem.
+    
+    It is a reduction between relations $R_1, R_2 \subseteq \sum^* \times \sum^*$
+    
+    $R_1$ is Levin-reducible to $R_2$ if there are functions $f:\sum^* \rightarrow \sum^*$, $g,h:\sum^* \times \sum^* \rightarrow \sum^*$  (computable in logarithmic space / polynomial time) such that:
+    
+    $R_1(x,y) \Rightarrow R_2(f(x), g(x,y))$
+    
+    $R_2(f(x),z) \Rightarrow R_1(x, h(x,z))$ (for all $x,y,z \in \sum^*$)
+    
+    \item Polynomial hierarchy
+    \begin{itemize}
+        \item $PH = \cup_k \sum_k^p$
+        \item $\sum_1^p= \NP$
+        \item $\prod_1^p= \co\NP$
+        \item $\sum_2^p= \NP^{\NP}$
+        \item If there exists a \PH-complete language, then $\PH = \sum_k^p$ for some k
+        \item If the classes $\sum_k^p$ are all different, then $\PH \neq \PSPACE$
+    \end{itemize}
+    
+    \item class $\polyL$
+    
+     $\polyL = \DSPACE((log (n))^{O(1)})$
+    
+    \item class $\RP$
+    
+    A language $L$ is in $\RP$ iff there is a machine M with source of random bits, working in polynomial time and such that:
+    \begin{itemize}
+        \item $w \in L \Rightarrow Pr_s[(w,s) \in L_M] \geq 0.5$
+        \item $w \notin L \Rightarrow \nexists s. (w,s) \in L_M$
+    \end{itemize}
+    
+    \item class $\PP$
+    
+    Like $\RP$, but:
+    \begin{itemize}
+        \item $w \in L \Rightarrow Pr_s[(w,s) \in L_M] \geq 0.5$
+        \item $w \notin L \Rightarrow Pr_s[(w,s) \in L_M] < 0.5$
+    \end{itemize}
+    
+    \item class $\BPP$
+    
+    Like $\RP$, but:
+    \begin{itemize}
+        \item $w \in L \Rightarrow Pr_s[(w,s) \in L_M] \geq 3/4$
+        \item $w \notin L \Rightarrow Pr_s[(w,s) \in L_M] \leq 1/4$
+    \end{itemize}
+    
+    \item Fixes-parameter tractability
+    \begin{itemize}
+        \item a parameter - a function from input words to natural numbers
+        \item a problem is FPT with respect to a parameter k, if it has complexity $f(k)*n^c$ (important: the exponent does not depend on k)
+    \end{itemize}
+    
+    \item Approximation
+    
+    $\rho$-approximation algorithm returns a solution that: 
+    
+    $\rightarrow$ for maximization problems: $solution \geq optimum*\rho$
+    
+    $\rightarrow$ for minimization problems: $solution \leq optimum*\rho$
+    
+    Different possibilities: 
+    \begin{itemize}
+        \item approximation impossible within any constant factor (unless p=NP)
+        \item there exists an approximation algorithm with a constant factor
+        \item for every $\epsilon > 0$ there is an $(1+\epsilon)$-approximation algorithm (minimization problems) or $(1-\epsilon)$-approximation algorithm (maximization problems), we say that there exists a PTAS (polynomial time approximation scheme);
+        
+        if the exponent in the algoritm does not depend on $\epsilon$, we say that there exists a strong PTAS 
+    \end{itemize}
+    
+    Examples:
+    \begin{itemize}
+        \item Traveling salesmen problem: no approximation with constant factor, unless $\P = \NP$.
+        \item MAX-CLIQUE – approximation almost impossible
+        \item MAX-3CNFSAT – 7/8-approximation possible,
+        better approximation impossible
+        \item There is a 2-approximation of VERTEX-COVER
+        \item knapsack problem – there is a strong PTAS – for every $\epsilon > 0 $ there is a $(1-\epsilon)$-approximation algorithm working in time $O(n^3)$ 
+    \end{itemize}
+    
+    
+    
+
+    
+\end{enumerate}
